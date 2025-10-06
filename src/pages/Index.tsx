@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Sprout, FlaskConical, Cloud, Users, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -26,9 +27,11 @@ const Index = () => {
             AI-powered crop disease detection, intelligent recommendations, and real-time agricultural guidance for farmers
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <Button size="lg" className="h-12 px-8 text-base">
-              Get Started
-            </Button>
+            <Link to="/dashboard">
+              <Button size="lg" className="h-12 px-8 text-base w-full sm:w-auto">
+                Get Started
+              </Button>
+            </Link>
             <Button size="lg" variant="outline" className="h-12 px-8 text-base">
               Learn More
             </Button>
