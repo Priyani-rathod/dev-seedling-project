@@ -30,6 +30,7 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
+      console.log("Sending message to chatbot...");
       const { data, error } = await supabase.functions.invoke('chat', {
         body: { 
           messages: [
@@ -39,7 +40,12 @@ const Chatbot = () => {
         }
       });
 
-      if (error) throw error;
+      console.log("Response from chatbot:", data, error);
+
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw error;
+      }
 
       const assistantMessage = data.choices[0].message.content;
       setMessages(prev => [...prev, { 
@@ -47,12 +53,14 @@ const Chatbot = () => {
         content: assistantMessage 
       }]);
     } catch (error) {
+      console.error("Chat error:", error);
       toast({
         title: "Error",
-        description: "Failed to get response from AI assistant.",
+        description: error instanceof Error ? error.message : "Failed to get response from AI assistant.",
         variant: "destructive",
       });
-      console.error("Chat error:", error);
+      // Remove the user message if there was an error
+      setMessages(prev => prev.slice(0, -1));
     } finally {
       setIsLoading(false);
     }
