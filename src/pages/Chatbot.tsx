@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Send, Mic, Languages } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ArrowLeft, Send, Mic, Languages, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = {
   role: "user" | "assistant";
@@ -11,25 +14,86 @@ type Message = {
 };
 
 const Chatbot = () => {
+  const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "नमस्ते! मैं आपकी खेती में कैसे मदद कर सकता हूं? / Hello! How can I help you with farming today?" }
   ]);
   const [input, setInput] = useState("");
   const [language, setLanguage] = useState<"hindi" | "english">("english");
+  const [apiKey, setApiKey] = useState("");
+  const [apiEndpoint, setApiEndpoint] = useState("https://api.openai.com/v1/chat/completions");
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const handleSend = () => {
+  // Load saved API settings
+  useEffect(() => {
+    const savedKey = localStorage.getItem("chatbot_api_key");
+    const savedEndpoint = localStorage.getItem("chatbot_api_endpoint");
+    if (savedKey) setApiKey(savedKey);
+    if (savedEndpoint) setApiEndpoint(savedEndpoint);
+  }, []);
+
+  const saveSettings = () => {
+    localStorage.setItem("chatbot_api_key", apiKey);
+    localStorage.setItem("chatbot_api_endpoint", apiEndpoint);
+    setIsSettingsOpen(false);
+    toast({
+      title: "Settings saved",
+      description: "API configuration has been updated",
+    });
+  };
+
+  const handleSend = async () => {
     if (!input.trim()) return;
     
-    setMessages([...messages, { role: "user", content: input }]);
+    const userMessage = input;
+    setMessages([...messages, { role: "user", content: userMessage }]);
     setInput("");
     
-    // Simulate AI response
-    setTimeout(() => {
+    if (!apiKey) {
+      toast({
+        title: "API Key Required",
+        description: "Please configure your API key in settings",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: "You are a helpful agricultural assistant. Provide farming advice in a clear and friendly manner." },
+            ...messages.map(m => ({ role: m.role, content: m.content })),
+            { role: "user", content: userMessage }
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get response from API");
+      }
+
+      const data = await response.json();
+      const assistantMessage = data.choices[0].message.content;
+
       setMessages(prev => [...prev, { 
         role: "assistant", 
-        content: "I'm here to help with your farming questions. This is a demo response. In production, this will connect to our AI assistant." 
+        content: assistantMessage 
       }]);
-    }, 1000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please check your API settings.",
+        variant: "destructive",
+      });
+      console.error("Chat error:", error);
+    }
   };
 
   return (
@@ -42,15 +106,57 @@ const Chatbot = () => {
               <ArrowLeft className="h-5 w-5" />
               <span className="font-medium">Back</span>
             </Link>
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => setLanguage(language === "hindi" ? "english" : "hindi")}
-              className="text-primary-foreground hover:bg-primary-foreground/10"
-            >
-              <Languages className="h-4 w-4 mr-2" />
-              {language === "hindi" ? "English" : "हिन्दी"}
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setLanguage(language === "hindi" ? "english" : "hindi")}
+                className="text-primary-foreground hover:bg-primary-foreground/10"
+              >
+                <Languages className="h-4 w-4 mr-2" />
+                {language === "hindi" ? "English" : "हिन्दी"}
+              </Button>
+              <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="text-primary-foreground hover:bg-primary-foreground/10"
+                  >
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>API Settings</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="api-key">API Key</Label>
+                      <Input
+                        id="api-key"
+                        type="password"
+                        placeholder="sk-..."
+                        value={apiKey}
+                        onChange={(e) => setApiKey(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="api-endpoint">API Endpoint</Label>
+                      <Input
+                        id="api-endpoint"
+                        placeholder="https://api.openai.com/v1/chat/completions"
+                        value={apiEndpoint}
+                        onChange={(e) => setApiEndpoint(e.target.value)}
+                      />
+                    </div>
+                    <Button onClick={saveSettings} className="w-full">
+                      Save Settings
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
           <h1 className="font-heading text-xl font-bold">AI Farm Assistant</h1>
           <p className="text-sm text-primary-foreground/90">Ask me anything about farming</p>
