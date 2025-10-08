@@ -19,6 +19,8 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY is not configured');
     }
 
+    console.log('Received messages:', messages);
+    
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -34,6 +36,7 @@ serve(async (req) => {
           },
           ...messages,
         ],
+        temperature: 0.7,
       }),
     });
 
