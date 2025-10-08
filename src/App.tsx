@@ -1,6 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
@@ -20,25 +19,23 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<><Dashboard /><BottomNav /></>} />
-          <Route path="/disease-detection" element={<><DiseaseDetection /><BottomNav /></>} />
-          <Route path="/crop-recommendation" element={<><CropRecommendation /><BottomNav /></>} />
-          <Route path="/fertilizer-recommendation" element={<><FertilizerRecommendation /><BottomNav /></>} />
-          <Route path="/chatbot" element={<><Chatbot /><BottomNav /></>} />
-          <Route path="/history" element={<><History /><BottomNav /></>} />
-          <Route path="/community" element={<><Community /><BottomNav /></>} />
-          <Route path="/profile" element={<><Profile /><BottomNav /></>} />
-          <Route path="/weather" element={<><Weather /><BottomNav /></>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <Toaster />
+    <Sonner />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/dashboard" element={<><Dashboard /><BottomNav /></>} />
+        <Route path="/disease-detection" element={<><DiseaseDetection /><BottomNav /></>} />
+        <Route path="/crop-recommendation" element={<><CropRecommendation /><BottomNav /></>} />
+        <Route path="/fertilizer-recommendation" element={<><FertilizerRecommendation /><BottomNav /></>} />
+        <Route path="/chatbot" element={<><Chatbot /><BottomNav /></>} />
+        <Route path="/history" element={<><History /><BottomNav /></>} />
+        <Route path="/community" element={<><Community /><BottomNav /></>} />
+        <Route path="/profile" element={<><Profile /><BottomNav /></>} />
+        <Route path="/weather" element={<><Weather /><BottomNav /></>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
