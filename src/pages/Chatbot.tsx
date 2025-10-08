@@ -67,7 +67,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-background to-muted">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-background to-muted pb-20">
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-4 shadow-lg flex-shrink-0">
         <div className="container max-w-4xl mx-auto">
@@ -92,8 +92,8 @@ const Chatbot = () => {
       </header>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto pb-4">
-        <div className="container max-w-4xl mx-auto px-4 py-6 space-y-4">
+      <div className="flex-1 overflow-y-auto">
+        <div className="container max-w-4xl mx-auto px-4 py-6 space-y-4 pb-32">
           {messages.map((message, index) => (
             <div
               key={index}
@@ -110,11 +110,18 @@ const Chatbot = () => {
               </Card>
             </div>
           ))}
+          {isLoading && (
+            <div className="flex justify-start">
+              <Card className="max-w-[85%] p-4 bg-card">
+                <p className="text-sm leading-relaxed">Typing...</p>
+              </Card>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Quick Suggestions */}
-      <div className="flex-shrink-0 border-t bg-background/95 backdrop-blur">
+      <div className="fixed bottom-24 left-0 right-0 border-t bg-background/95 backdrop-blur z-10">
         <div className="container max-w-4xl mx-auto px-4 py-3">
           <div className="flex gap-2 overflow-x-auto pb-2">
             <Button 
@@ -145,8 +152,8 @@ const Chatbot = () => {
         </div>
       </div>
 
-      {/* Input Area */}
-      <div className="flex-shrink-0 border-t bg-background/95 backdrop-blur pb-safe">
+      {/* Input Area - Fixed at bottom */}
+      <div className="fixed bottom-0 left-0 right-0 border-t bg-background shadow-lg z-20 pb-16">
         <div className="container max-w-4xl mx-auto px-4 py-4">
           <div className="flex gap-2">
             <Button variant="outline" size="icon" className="flex-shrink-0">
@@ -158,12 +165,13 @@ const Chatbot = () => {
               onKeyPress={(e) => e.key === "Enter" && handleSend()}
               placeholder={language === "hindi" ? "अपना सवाल पूछें..." : "Ask your question..."}
               className="flex-1"
+              disabled={isLoading}
             />
             <Button 
               onClick={handleSend} 
               size="icon" 
               className="flex-shrink-0"
-              disabled={isLoading}
+              disabled={isLoading || !input.trim()}
             >
               <Send className="h-5 w-5" />
             </Button>
