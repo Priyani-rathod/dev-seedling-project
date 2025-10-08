@@ -3,7 +3,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import DiseaseDetection from "./pages/DiseaseDetection";
 import CropRecommendation from "./pages/CropRecommendation";
@@ -24,15 +26,16 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/dashboard" element={<><Dashboard /><BottomNav /></>} />
-        <Route path="/disease-detection" element={<><DiseaseDetection /><BottomNav /></>} />
-        <Route path="/crop-recommendation" element={<><CropRecommendation /><BottomNav /></>} />
-        <Route path="/fertilizer-recommendation" element={<><FertilizerRecommendation /><BottomNav /></>} />
-        <Route path="/chatbot" element={<><Chatbot /><BottomNav /></>} />
-        <Route path="/history" element={<><History /><BottomNav /></>} />
-        <Route path="/community" element={<><Community /><BottomNav /></>} />
-        <Route path="/profile" element={<><Profile /><BottomNav /></>} />
-        <Route path="/weather" element={<><Weather /><BottomNav /></>} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /><BottomNav /></ProtectedRoute>} />
+        <Route path="/disease-detection" element={<ProtectedRoute><DiseaseDetection /><BottomNav /></ProtectedRoute>} />
+        <Route path="/crop-recommendation" element={<ProtectedRoute><CropRecommendation /><BottomNav /></ProtectedRoute>} />
+        <Route path="/fertilizer-recommendation" element={<ProtectedRoute><FertilizerRecommendation /><BottomNav /></ProtectedRoute>} />
+        <Route path="/chatbot" element={<ProtectedRoute><Chatbot /><BottomNav /></ProtectedRoute>} />
+        <Route path="/history" element={<ProtectedRoute><History /><BottomNav /></ProtectedRoute>} />
+        <Route path="/community" element={<ProtectedRoute><Community /><BottomNav /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /><BottomNav /></ProtectedRoute>} />
+        <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

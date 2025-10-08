@@ -13,7 +13,9 @@ const Index = () => {
             <Leaf className="h-6 w-6 text-primary" />
             <h1 className="font-heading text-xl font-bold text-primary">Fasal Sarthi</h1>
           </div>
-          <Button variant="outline" size="sm">Login</Button>
+          <Link to="/auth">
+            <Button variant="outline" size="sm">Login</Button>
+          </Link>
         </div>
       </header>
 
@@ -27,7 +29,7 @@ const Index = () => {
             AI-powered crop disease detection, intelligent recommendations, and real-time agricultural guidance for farmers
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <Link to="/dashboard">
+            <Link to="/auth">
               <Button size="lg" className="h-12 px-8 text-base w-full sm:w-auto">
                 Get Started
               </Button>
