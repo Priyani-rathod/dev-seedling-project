@@ -6,6 +6,7 @@ import { ArrowLeft, Send, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import chatbotBackground from "@/assets/chatbot-background.jpg";
 
 type Message = {
   role: "user" | "assistant";
@@ -74,25 +75,34 @@ const Chatbot = () => {
 
   if (!language) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-background px-4">
-        <div className="max-w-md w-full text-center space-y-8">
+      <div 
+        className="flex flex-col items-center justify-center h-screen px-4 relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${chatbotBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          fontFamily: 'Poppins, sans-serif'
+        }}
+      >
+        <div className="max-w-md w-full text-center space-y-8 bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl">
           <div className="space-y-3">
-            <h1 className="text-4xl font-bold text-foreground" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <h1 className="text-4xl font-bold text-gray-900" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Fasal Sarthi
             </h1>
-            <h2 className="text-xl font-semibold text-foreground/90" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <h2 className="text-xl font-semibold text-gray-800" style={{ fontFamily: 'Poppins, sans-serif' }}>
               फसल सारथी
             </h2>
-            <p className="text-muted-foreground text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-gray-600 text-lg" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Your Smart Farming Assistant
             </p>
           </div>
           
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-sm text-gray-700 font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Please select your preferred language:
             </p>
-            <p className="text-sm text-muted-foreground font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-sm text-gray-700 font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
               कृपया अपनी पसंदीदा भाषा चुनें:
             </p>
             
@@ -101,7 +111,7 @@ const Chatbot = () => {
                 onClick={() => handleLanguageSelect("english")}
                 size="lg"
                 className="text-lg font-semibold h-14 rounded-xl shadow-lg hover:shadow-xl transition-all"
-                style={{ fontFamily: 'Inter, sans-serif' }}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 English
               </Button>
@@ -109,14 +119,14 @@ const Chatbot = () => {
                 onClick={() => handleLanguageSelect("hindi")}
                 size="lg"
                 className="text-lg font-semibold h-14 rounded-xl shadow-lg hover:shadow-xl transition-all"
-                style={{ fontFamily: 'Inter, sans-serif' }}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 हिंदी (Hindi)
               </Button>
             </div>
           </div>
           
-          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors mt-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
           </Link>
@@ -126,7 +136,17 @@ const Chatbot = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-background pb-20" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div 
+      className="flex flex-col h-screen pb-20 relative" 
+      style={{ 
+        fontFamily: 'Poppins, sans-serif',
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url(${chatbotBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-4 shadow-md flex-shrink-0">
         <div className="container max-w-4xl mx-auto">
@@ -154,7 +174,7 @@ const Chatbot = () => {
       </header>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto bg-background">
+      <div className="flex-1 overflow-y-auto bg-transparent">
         <div className="container max-w-4xl mx-auto px-4 py-6 space-y-4 pb-32">
           {messages.map((message, index) => (
             <div
@@ -162,13 +182,13 @@ const Chatbot = () => {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
             >
               <Card
-                className={`max-w-[85%] p-4 shadow-sm ${
+                className={`max-w-[85%] p-4 shadow-md ${
                   message.role === "user"
                     ? "bg-primary text-primary-foreground rounded-2xl rounded-br-sm"
-                    : "bg-card border rounded-2xl rounded-bl-sm"
+                    : "bg-white/95 backdrop-blur-sm border border-gray-200 rounded-2xl rounded-bl-sm"
                 }`}
               >
-                <p className="text-base leading-relaxed whitespace-pre-wrap" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-base leading-relaxed whitespace-pre-wrap" style={{ fontFamily: 'Poppins, sans-serif' }}>
                   {message.content}
                 </p>
               </Card>
@@ -176,14 +196,14 @@ const Chatbot = () => {
           ))}
           {isLoading && (
             <div className="flex justify-start animate-fade-in">
-              <Card className="max-w-[85%] p-4 bg-card border rounded-2xl rounded-bl-sm shadow-sm">
+              <Card className="max-w-[85%] p-4 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-2xl rounded-bl-sm shadow-md">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     {language === "hindi" ? "टाइप कर रहा है..." : "Typing..."}
                   </p>
                 </div>
@@ -195,8 +215,8 @@ const Chatbot = () => {
 
       {/* Quick Suggestions */}
       {messages.length > 0 && (
-        <div className="fixed bottom-20 left-0 right-0 border-t bg-background/95 backdrop-blur-sm z-10 shadow-sm">
-          <div className="container max-w-4xl mx-auto px-4 py-3">
+        <div className="fixed bottom-20 left-0 right-0 border-t bg-white/95 backdrop-blur-sm z-10 shadow-sm">
+          <div className="container max-w-4xl mx-auto px-4 py-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               <Button 
                 variant="outline" 
@@ -228,8 +248,8 @@ const Chatbot = () => {
       )}
 
       {/* Input Area - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 border-t bg-background shadow-lg z-20 pb-16">
-        <div className="container max-w-4xl mx-auto px-4 py-3">
+      <div className="fixed bottom-0 left-0 right-0 border-t bg-white/95 backdrop-blur-sm shadow-lg z-20 pb-16">
+        <div className="container max-w-4xl mx-auto px-4 py-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
           <div className="flex gap-2">
             <Input
               value={input}
