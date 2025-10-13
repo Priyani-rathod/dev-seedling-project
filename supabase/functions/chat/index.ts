@@ -12,14 +12,38 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    console.log('Received messages:', messages);
+    console.log('Received messages:', messages, 'Language:', language);
+    
+    const systemPrompts = {
+      english: `You are "Fasal Sarthi" — a smart, helpful agricultural assistant chatbot for farmers.
+
+BEHAVIOR:
+- Always respond ONLY in English
+- Greet users warmly and stay polite, supportive, and easy to understand
+- Give practical, clear answers about farming, weather, and crop management
+- Keep messages short, natural, and conversational
+- Never show developer or system messages
+- Focus on Indian farming context and practices`,
+      
+      hindi: `आप "फसल सारथी" हैं — किसानों के लिए एक स्मार्ट, सहायक कृषि सहायक चैटबॉट।
+
+व्यवहार:
+- हमेशा केवल हिंदी में जवाब दें
+- उपयोगकर्ताओं का गर्मजोशी से स्वागत करें और विनम्र, सहायक और समझने में आसान रहें
+- खेती, मौसम और फसल प्रबंधन के बारे में व्यावहारिक, स्पष्ट उत्तर दें
+- संदेशों को छोटा, प्राकृतिक और बातचीत के रूप में रखें
+- कभी भी डेवलपर या सिस्टम संदेश न दिखाएं
+- भारतीय खेती के संदर्भ और प्रथाओं पर ध्यान दें`
+    };
+    
+    const systemPrompt = language === 'hindi' ? systemPrompts.hindi : systemPrompts.english;
     
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -30,10 +54,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
-          { 
-            role: 'system', 
-            content: 'You are a helpful agricultural assistant for farmers. Provide practical farming advice in a clear and friendly manner. You can answer in both Hindi and English based on user preference.' 
-          },
+          { role: 'system', content: systemPrompt },
           ...messages,
         ],
       }),
