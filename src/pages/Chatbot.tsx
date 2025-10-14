@@ -175,7 +175,7 @@ const Chatbot = () => {
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto bg-transparent">
-        <div className="container max-w-4xl mx-auto px-4 py-6 space-y-4 pb-32">
+        <div className="container max-w-4xl mx-auto px-4 py-6 space-y-4 pb-48">
           {messages.map((message, index) => (
             <div
               key={index}
@@ -215,7 +215,7 @@ const Chatbot = () => {
 
       {/* Quick Suggestions */}
       {messages.length > 0 && (
-        <div className="fixed bottom-20 left-0 right-0 border-t bg-white/95 backdrop-blur-sm z-10 shadow-sm">
+        <div className="fixed bottom-32 left-0 right-0 border-t bg-white/95 backdrop-blur-sm z-10 shadow-sm">
           <div className="container max-w-4xl mx-auto px-4 py-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               <Button 
@@ -248,8 +248,8 @@ const Chatbot = () => {
       )}
 
       {/* Input Area - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 border-t bg-white/95 backdrop-blur-sm shadow-lg z-20 pb-16">
-        <div className="container max-w-4xl mx-auto px-4 py-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+      <div className="fixed bottom-0 left-0 right-0 border-t bg-white/95 backdrop-blur-sm shadow-lg z-20 pb-20">
+        <div className="container max-w-4xl mx-auto px-4 py-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
           <div className="flex gap-2">
             <Input
               value={input}
