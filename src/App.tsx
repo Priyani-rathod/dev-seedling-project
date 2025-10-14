@@ -19,9 +19,26 @@ import Profile from "./pages/Profile";
 import Weather from "./pages/Weather";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Create a stable QueryClient instance outside the component
+let browserQueryClient: QueryClient | undefined = undefined;
 
-const App = () => (
+function getQueryClient() {
+  if (typeof window === 'undefined') {
+    // Server: always create a new query client
+    return new QueryClient();
+  } else {
+    // Browser: create a new query client if we don't already have one
+    if (!browserQueryClient) {
+      browserQueryClient = new QueryClient();
+    }
+    return browserQueryClient;
+  }
+}
+
+const App = () => {
+  const queryClient = getQueryClient();
+  
+  return (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
@@ -46,6 +63,7 @@ const App = () => (
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
