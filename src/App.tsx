@@ -1,7 +1,9 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import BottomNav from "@/components/BottomNav";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
@@ -21,9 +23,11 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <Toaster />
-    <Sonner />
-    <BrowserRouter>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/auth" element={<Auth />} />
@@ -38,7 +42,9 @@ const App = () => (
         <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
