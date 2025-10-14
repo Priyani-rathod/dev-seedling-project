@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         sans: ['Open Sans', 'sans-serif'],
         heading: ['Inter', 'sans-serif'],
+        chatbot: ['Nunito', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
