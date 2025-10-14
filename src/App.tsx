@@ -25,10 +25,10 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
         <BrowserRouter>
-      <Routes>
+          <Toaster />
+          <Sonner />
+          <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /><BottomNav /></ProtectedRoute>} />
@@ -41,7 +41,7 @@ const App = () => (
         <Route path="/profile" element={<ProtectedRoute><Profile /><BottomNav /></ProtectedRoute>} />
         <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
-      </Routes>
+          </Routes>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
