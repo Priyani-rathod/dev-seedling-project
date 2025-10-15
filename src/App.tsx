@@ -1,6 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
@@ -24,26 +23,24 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <TooltipProvider>
-        <BrowserRouter>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /><BottomNav /></ProtectedRoute>} />
-            <Route path="/disease-detection" element={<ProtectedRoute><DiseaseDetection /><BottomNav /></ProtectedRoute>} />
-            <Route path="/crop-recommendation" element={<ProtectedRoute><CropRecommendation /><BottomNav /></ProtectedRoute>} />
-            <Route path="/fertilizer-recommendation" element={<ProtectedRoute><FertilizerRecommendation /><BottomNav /></ProtectedRoute>} />
-            <Route path="/chatbot" element={<ProtectedRoute><Chatbot /><BottomNav /></ProtectedRoute>} />
-            <Route path="/history" element={<ProtectedRoute><History /><BottomNav /></ProtectedRoute>} />
-            <Route path="/community" element={<ProtectedRoute><Community /><BottomNav /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /><BottomNav /></ProtectedRoute>} />
-            <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <BrowserRouter>
+        <Toaster />
+        <Sonner />
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /><BottomNav /></ProtectedRoute>} />
+          <Route path="/disease-detection" element={<ProtectedRoute><DiseaseDetection /><BottomNav /></ProtectedRoute>} />
+          <Route path="/crop-recommendation" element={<ProtectedRoute><CropRecommendation /><BottomNav /></ProtectedRoute>} />
+          <Route path="/fertilizer-recommendation" element={<ProtectedRoute><FertilizerRecommendation /><BottomNav /></ProtectedRoute>} />
+          <Route path="/chatbot" element={<ProtectedRoute><Chatbot /><BottomNav /></ProtectedRoute>} />
+          <Route path="/history" element={<ProtectedRoute><History /><BottomNav /></ProtectedRoute>} />
+          <Route path="/community" element={<ProtectedRoute><Community /><BottomNav /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /><BottomNav /></ProtectedRoute>} />
+          <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   </QueryClientProvider>
 );
