@@ -146,14 +146,14 @@ const Chatbot = () => {
       {/* Header */}
       <header className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground p-4 shadow-lg flex-shrink-0">
         <div className="container max-w-4xl mx-auto">
-          <div className="flex items-center justify-between gap-2">
-            <Link to="/dashboard" className="inline-flex items-center gap-1 hover:opacity-80 transition-opacity flex-shrink-0">
+          <div className="flex items-center justify-between gap-4">
+            <Link to="/dashboard" className="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity flex-shrink-0 min-w-[100px]">
               <ArrowLeft className="h-5 w-5" />
               <span className="font-semibold text-sm">Dashboard</span>
             </Link>
-            <div className="text-center flex-1 min-w-0">
-              <h1 className="text-xl font-bold font-chatbot truncate">Fasal Sarthi</h1>
-              <p className="text-xs text-primary-foreground/90 font-chatbot truncate">
+            <div className="text-center flex-1 px-2">
+              <h1 className="text-xl font-bold font-chatbot">Fasal Sarthi</h1>
+              <p className="text-xs text-primary-foreground/90 font-chatbot whitespace-nowrap">
                 {language === "hindi" ? "आपका स्मार्ट कृषि सहायक" : "Your Smart Farming Assistant"}
               </p>
             </div>
@@ -161,7 +161,7 @@ const Chatbot = () => {
               variant="ghost"
               size="sm"
               onClick={() => setLanguage(null)}
-              className="text-primary-foreground hover:bg-primary-foreground/20 font-chatbot font-semibold text-sm flex-shrink-0 px-3"
+              className="text-primary-foreground hover:bg-primary-foreground/20 font-chatbot font-semibold text-sm flex-shrink-0 min-w-[70px]"
             >
               {language === "hindi" ? "बदलें" : "Change"}
             </Button>
