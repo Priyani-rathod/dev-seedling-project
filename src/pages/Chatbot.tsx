@@ -86,22 +86,22 @@ const Chatbot = () => {
       >
         <div className="max-w-md w-full text-center space-y-8 bg-white/98 backdrop-blur-md p-10 rounded-3xl shadow-2xl border border-primary/10">
           <div className="space-y-3">
-            <h1 className="text-5xl font-bold text-primary font-chatbot">
+            <h1 className="text-5xl font-bold text-black font-chatbot">
               Fasal Sarthi
             </h1>
-            <h2 className="text-2xl font-bold text-primary-dark font-chatbot">
+            <h2 className="text-2xl font-bold text-black font-chatbot">
               फसल सारथी
             </h2>
-            <p className="text-muted-foreground text-lg font-medium font-chatbot">
+            <p className="text-gray-800 text-lg font-medium font-chatbot">
               Your Smart Farming Assistant
             </p>
           </div>
           
           <div className="space-y-4">
-            <p className="text-sm text-foreground font-semibold font-chatbot">
+            <p className="text-sm text-black font-semibold font-chatbot">
               Please select your preferred language:
             </p>
-            <p className="text-sm text-foreground font-semibold font-chatbot">
+            <p className="text-sm text-black font-semibold font-chatbot">
               कृपया अपनी पसंदीदा भाषा चुनें:
             </p>
             
@@ -123,7 +123,7 @@ const Chatbot = () => {
             </div>
           </div>
           
-          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm text-primary-dark hover:text-primary transition-colors mt-6 font-medium font-chatbot">
+          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm text-black hover:text-primary transition-colors mt-6 font-medium font-chatbot">
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
           </Link>
@@ -180,8 +180,8 @@ const Chatbot = () => {
               <Card
                 className={`max-w-[85%] p-4 shadow-lg ${
                   message.role === "user"
-                    ? "bg-gradient-to-br from-primary to-primary-dark text-primary-foreground rounded-2xl rounded-br-sm"
-                    : "bg-white border-2 border-primary/20 rounded-2xl rounded-bl-sm"
+                    ? "bg-gradient-to-br from-primary to-primary-dark text-white rounded-2xl rounded-br-sm"
+                    : "bg-white border-2 border-primary/20 rounded-2xl rounded-bl-sm text-black"
                 }`}
               >
                 <p className="text-base leading-relaxed whitespace-pre-wrap font-chatbot">
@@ -199,7 +199,7 @@ const Chatbot = () => {
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                   </div>
-                  <p className="text-sm text-muted-foreground font-chatbot">
+                  <p className="text-sm text-gray-600 font-chatbot">
                     {language === "hindi" ? "टाइप कर रहा है..." : "Typing..."}
                   </p>
                 </div>
