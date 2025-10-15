@@ -18,31 +18,40 @@ import Profile from "./pages/Profile";
 import Weather from "./pages/Weather";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Create query client outside component to avoid recreating on every render
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <BrowserRouter>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /><BottomNav /></ProtectedRoute>} />
-          <Route path="/disease-detection" element={<ProtectedRoute><DiseaseDetection /><BottomNav /></ProtectedRoute>} />
-          <Route path="/crop-recommendation" element={<ProtectedRoute><CropRecommendation /><BottomNav /></ProtectedRoute>} />
-          <Route path="/fertilizer-recommendation" element={<ProtectedRoute><FertilizerRecommendation /><BottomNav /></ProtectedRoute>} />
-          <Route path="/chatbot" element={<ProtectedRoute><Chatbot /><BottomNav /></ProtectedRoute>} />
-          <Route path="/history" element={<ProtectedRoute><History /><BottomNav /></ProtectedRoute>} />
-          <Route path="/community" element={<ProtectedRoute><Community /><BottomNav /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><Profile /><BottomNav /></ProtectedRoute>} />
-          <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <BrowserRouter>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /><BottomNav /></ProtectedRoute>} />
+            <Route path="/disease-detection" element={<ProtectedRoute><DiseaseDetection /><BottomNav /></ProtectedRoute>} />
+            <Route path="/crop-recommendation" element={<ProtectedRoute><CropRecommendation /><BottomNav /></ProtectedRoute>} />
+            <Route path="/fertilizer-recommendation" element={<ProtectedRoute><FertilizerRecommendation /><BottomNav /></ProtectedRoute>} />
+            <Route path="/chatbot" element={<ProtectedRoute><Chatbot /><BottomNav /></ProtectedRoute>} />
+            <Route path="/history" element={<ProtectedRoute><History /><BottomNav /></ProtectedRoute>} />
+            <Route path="/community" element={<ProtectedRoute><Community /><BottomNav /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /><BottomNav /></ProtectedRoute>} />
+            <Route path="/weather" element={<ProtectedRoute><Weather /><BottomNav /></ProtectedRoute>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
