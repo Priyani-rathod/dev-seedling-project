@@ -76,7 +76,7 @@ const Chatbot = () => {
   if (!language) {
     return (
       <div 
-        className="flex flex-col items-center justify-center h-screen px-4 relative"
+        className="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(46, 125, 50, 0.9)), url(${chatbotBackground})`,
           backgroundSize: 'cover',
@@ -84,20 +84,20 @@ const Chatbot = () => {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="max-w-md w-full text-center space-y-8 bg-white/98 backdrop-blur-md p-10 rounded-3xl shadow-2xl border border-primary/10">
-          <div className="space-y-3">
-            <h1 className="text-5xl font-bold text-black font-chatbot">
+        <div className="max-w-md w-full text-center space-y-6 bg-white p-8 rounded-3xl shadow-2xl">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold text-black font-chatbot">
               Fasal Sarthi
             </h1>
-            <h2 className="text-2xl font-bold text-black font-chatbot">
+            <h2 className="text-xl font-bold text-black font-chatbot">
               फसल सारथी
             </h2>
-            <p className="text-gray-800 text-lg font-medium font-chatbot">
+            <p className="text-gray-700 text-base font-medium font-chatbot">
               Your Smart Farming Assistant
             </p>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-4 pt-4">
             <p className="text-sm text-black font-semibold font-chatbot">
               Please select your preferred language:
             </p>
@@ -105,25 +105,25 @@ const Chatbot = () => {
               कृपया अपनी पसंदीदा भाषा चुनें:
             </p>
             
-            <div className="flex flex-col gap-4 mt-6">
+            <div className="flex flex-col gap-3 mt-4">
               <Button
                 onClick={() => handleLanguageSelect("english")}
                 size="lg"
-                className="text-lg font-bold h-16 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary-dark font-chatbot"
+                className="text-lg font-bold h-14 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary-dark font-chatbot"
               >
                 English
               </Button>
               <Button
                 onClick={() => handleLanguageSelect("hindi")}
                 size="lg"
-                className="text-lg font-bold h-16 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary-dark font-chatbot"
+                className="text-lg font-bold h-14 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary-dark font-chatbot"
               >
                 हिंदी (Hindi)
               </Button>
             </div>
           </div>
           
-          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm text-black hover:text-primary transition-colors mt-6 font-medium font-chatbot">
+          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm text-black hover:text-primary transition-colors pt-4 font-medium font-chatbot">
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
           </Link>
@@ -144,16 +144,16 @@ const Chatbot = () => {
       }}
     >
       {/* Header */}
-      <header className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground p-5 shadow-lg flex-shrink-0">
+      <header className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground p-4 shadow-lg flex-shrink-0">
         <div className="container max-w-4xl mx-auto">
-          <div className="flex items-center justify-between">
-            <Link to="/dashboard" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div className="flex items-center justify-between gap-2">
+            <Link to="/dashboard" className="inline-flex items-center gap-1 hover:opacity-80 transition-opacity flex-shrink-0">
               <ArrowLeft className="h-5 w-5" />
-              <span className="font-semibold">Dashboard</span>
+              <span className="font-semibold text-sm">Dashboard</span>
             </Link>
-            <div className="text-center flex-1">
-              <h1 className="text-2xl font-bold font-chatbot">Fasal Sarthi</h1>
-              <p className="text-xs text-primary-foreground/90 font-chatbot">
+            <div className="text-center flex-1 min-w-0">
+              <h1 className="text-xl font-bold font-chatbot truncate">Fasal Sarthi</h1>
+              <p className="text-xs text-primary-foreground/90 font-chatbot truncate">
                 {language === "hindi" ? "आपका स्मार्ट कृषि सहायक" : "Your Smart Farming Assistant"}
               </p>
             </div>
@@ -161,9 +161,9 @@ const Chatbot = () => {
               variant="ghost"
               size="sm"
               onClick={() => setLanguage(null)}
-              className="text-primary-foreground hover:bg-primary-foreground/20 font-chatbot font-semibold"
+              className="text-primary-foreground hover:bg-primary-foreground/20 font-chatbot font-semibold text-sm flex-shrink-0 px-3"
             >
-              {language === "hindi" ? "भाषा बदलें" : "Change"}
+              {language === "hindi" ? "बदलें" : "Change"}
             </Button>
           </div>
         </div>
@@ -171,20 +171,20 @@ const Chatbot = () => {
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto bg-transparent">
-        <div className="container max-w-4xl mx-auto px-4 py-6 space-y-4 pb-48">
+        <div className="container max-w-4xl mx-auto px-4 py-4 space-y-4 pb-40">
           {messages.map((message, index) => (
             <div
               key={index}
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
             >
               <Card
-                className={`max-w-[85%] p-4 shadow-lg ${
+                className={`max-w-[85%] p-3 shadow-lg ${
                   message.role === "user"
                     ? "bg-gradient-to-br from-primary to-primary-dark text-white rounded-2xl rounded-br-sm"
                     : "bg-white border-2 border-primary/20 rounded-2xl rounded-bl-sm text-black"
                 }`}
               >
-                <p className="text-base leading-relaxed whitespace-pre-wrap font-chatbot">
+                <p className="text-sm leading-relaxed whitespace-pre-wrap font-chatbot">
                   {message.content}
                 </p>
               </Card>
@@ -192,7 +192,7 @@ const Chatbot = () => {
           ))}
           {isLoading && (
             <div className="flex justify-start animate-fade-in">
-              <Card className="max-w-[85%] p-4 bg-white border-2 border-primary/20 rounded-2xl rounded-bl-sm shadow-lg">
+              <Card className="max-w-[85%] p-3 bg-white border-2 border-primary/20 rounded-2xl rounded-bl-sm shadow-lg">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
@@ -211,13 +211,13 @@ const Chatbot = () => {
 
       {/* Quick Suggestions */}
       {messages.length > 0 && (
-        <div className="fixed bottom-32 left-0 right-0 border-t bg-white/98 backdrop-blur-md z-10 shadow-md">
-          <div className="container max-w-4xl mx-auto px-4 py-3 font-chatbot">
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="fixed bottom-24 left-0 right-0 border-t bg-white/98 backdrop-blur-md z-10 shadow-md">
+          <div className="container max-w-4xl mx-auto px-4 py-2 font-chatbot">
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="whitespace-nowrap text-xs hover:bg-primary hover:text-primary-foreground transition-all border-primary/30 font-chatbot font-semibold"
+                className="whitespace-nowrap text-xs hover:bg-primary hover:text-primary-foreground transition-all border-primary/30 font-chatbot font-semibold h-8 px-3"
                 onClick={() => setInput(language === "hindi" ? "मेरे क्षेत्र में कौन सी फसलें सबसे अच्छी होती हैं?" : "What crops grow best in my region?")}
               >
                 {language === "hindi" ? "सर्वोत्तम फसलें" : "Best Crops"}
@@ -225,7 +225,7 @@ const Chatbot = () => {
               <Button 
                 variant="outline" 
                 size="sm"
-                className="whitespace-nowrap text-xs hover:bg-primary hover:text-primary-foreground transition-all border-primary/30 font-chatbot font-semibold"
+                className="whitespace-nowrap text-xs hover:bg-primary hover:text-primary-foreground transition-all border-primary/30 font-chatbot font-semibold h-8 px-3"
                 onClick={() => setInput(language === "hindi" ? "मैं कीटों को प्राकृतिक रूप से कैसे नियंत्रित करूं?" : "How do I control pests naturally?")}
               >
                 {language === "hindi" ? "कीट नियंत्रण" : "Pest Control"}
@@ -233,7 +233,7 @@ const Chatbot = () => {
               <Button 
                 variant="outline" 
                 size="sm"
-                className="whitespace-nowrap text-xs hover:bg-primary hover:text-primary-foreground transition-all border-primary/30 font-chatbot font-semibold"
+                className="whitespace-nowrap text-xs hover:bg-primary hover:text-primary-foreground transition-all border-primary/30 font-chatbot font-semibold h-8 px-3"
                 onClick={() => setInput(language === "hindi" ? "मुझे अपनी फसलों को कब पानी देना चाहिए?" : "When should I water my crops?")}
               >
                 {language === "hindi" ? "पानी देने की युक्तियाँ" : "Watering Tips"}
@@ -245,23 +245,23 @@ const Chatbot = () => {
 
       {/* Input Area - Fixed at bottom */}
       <div className="fixed bottom-0 left-0 right-0 border-t bg-white/98 backdrop-blur-md shadow-xl z-20 pb-20">
-        <div className="container max-w-4xl mx-auto px-4 py-4 font-chatbot">
+        <div className="container max-w-4xl mx-auto px-4 py-3 font-chatbot">
           <div className="flex gap-2">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && !isLoading && handleSend()}
               placeholder={language === "hindi" ? "अपना सवाल पूछें..." : "Ask your question..."}
-              className="flex-1 text-base rounded-2xl border-2 border-primary/20 focus:border-primary font-chatbot"
+              className="flex-1 text-sm rounded-2xl border-2 border-primary/20 focus:border-primary font-chatbot h-11"
               disabled={isLoading}
             />
             <Button 
               onClick={handleSend} 
               size="icon" 
-              className="flex-shrink-0 rounded-2xl h-12 w-12 bg-gradient-to-br from-primary to-primary-dark hover:from-primary-dark hover:to-primary"
+              className="flex-shrink-0 rounded-2xl h-11 w-11 bg-gradient-to-br from-primary to-primary-dark hover:from-primary-dark hover:to-primary"
               disabled={isLoading || !input.trim()}
             >
-              <Send className="h-5 w-5" />
+              <Send className="h-4 w-4" />
             </Button>
           </div>
         </div>
