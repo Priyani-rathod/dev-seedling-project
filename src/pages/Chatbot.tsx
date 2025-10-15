@@ -144,16 +144,17 @@ const Chatbot = () => {
       }}
     >
       {/* Header */}
-      <header className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground p-4 shadow-lg flex-shrink-0">
+      <header className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground p-3 md:p-4 shadow-lg flex-shrink-0">
         <div className="container max-w-4xl mx-auto">
-          <div className="flex items-center justify-between gap-4">
-            <Link to="/dashboard" className="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity flex-shrink-0 min-w-[100px]">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="font-semibold text-sm">Dashboard</span>
+          <div className="flex items-center justify-between gap-2 md:gap-4">
+            <Link to="/dashboard" className="inline-flex items-center gap-1 md:gap-1.5 hover:opacity-80 transition-opacity flex-shrink-0">
+              <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="font-semibold text-xs md:text-sm hidden sm:inline">Dashboard</span>
+              <span className="font-semibold text-xs sm:hidden">Back</span>
             </Link>
-            <div className="text-center flex-1 px-2">
-              <h1 className="text-xl font-bold font-chatbot">Fasal Sarthi</h1>
-              <p className="text-xs text-primary-foreground/90 font-chatbot whitespace-nowrap">
+            <div className="text-center flex-1 px-1 md:px-2 min-w-0">
+              <h1 className="text-base md:text-xl font-bold font-chatbot truncate">Fasal Sarthi</h1>
+              <p className="text-[10px] md:text-xs text-primary-foreground/90 font-chatbot truncate">
                 {language === "hindi" ? "आपका स्मार्ट कृषि सहायक" : "Your Smart Farming Assistant"}
               </p>
             </div>
@@ -161,7 +162,7 @@ const Chatbot = () => {
               variant="ghost"
               size="sm"
               onClick={() => setLanguage(null)}
-              className="text-primary-foreground hover:bg-primary-foreground/20 font-chatbot font-semibold text-sm flex-shrink-0 min-w-[70px]"
+              className="text-primary-foreground hover:bg-primary-foreground/20 font-chatbot font-semibold text-xs md:text-sm flex-shrink-0 h-8 px-2 md:px-4"
             >
               {language === "hindi" ? "बदलें" : "Change"}
             </Button>
